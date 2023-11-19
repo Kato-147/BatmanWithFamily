@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class NodeController : MonoBehaviour
-{
+{   
     public bool canMoveLeft = false;
     public bool canMoveRight = false;
     public bool canMoveUp = false;
@@ -19,16 +20,14 @@ public class NodeController : MonoBehaviour
     void Start()
     {
 
-
         RaycastHit2D[] hitsDown;
         //Shoot rayCast (line) going down
-       
         hitsDown = Physics2D.RaycastAll(transform.position, -Vector2.up);
         // loop throught all of the gameobjects that the raycast hits
         for (int i =0; i < hitsDown.Length; i++ )
         {
             float distance = Mathf.Abs(hitsDown[i].point.y - transform.position.y);
-            if(distance< 0)
+            if(distance< 0.4f)
             {
                 canMoveDown = true;
                 nodeDown = hitsDown[i].collider.gameObject;
@@ -43,7 +42,7 @@ public class NodeController : MonoBehaviour
         for (int i = 0; i < hitsUp.Length; i++)
         {
             float distance = Mathf.Abs(hitsUp[i].point.y - transform.position.y);
-            if (distance < 0)
+            if (distance < 0.4f)
             {
                 canMoveUp = true;
                 nodeUp = hitsUp[i].collider.gameObject;
@@ -55,10 +54,10 @@ public class NodeController : MonoBehaviour
         //Shoot rayCast (line) going right
         hitsRight = Physics2D.RaycastAll(transform.position, Vector2.right);
         // loop throught all of the gameobjects that the raycast hits
-        for (int i = 0; i < hitsUp.Length; i++)
+        for (int i = 0; i < hitsRight.Length; i++)
         {
             float distance = Mathf.Abs(hitsRight[i].point.x - transform.position.x);
-            if (distance < 0)
+            if (distance < 0.4f)
             {
                 canMoveRight = true;
                 nodeRight = hitsRight[i].collider.gameObject;
@@ -69,13 +68,13 @@ public class NodeController : MonoBehaviour
         //Shoot rayCast (line) going left
         hitsLeft = Physics2D.RaycastAll(transform.position, -Vector2.right);
         // loop throught all of the gameobjects that the raycast hits
-        for (int i = 0; i < hitsUp.Length; i++)
+        for (int i = 0; i < hitsLeft.Length; i++)
         {
             float distance = Mathf.Abs(hitsLeft[i].point.x - transform.position.x);
-            if (distance < 0)
+            if (distance < 0.4f)
             {
                 canMoveLeft = true;
-                nodeLeft = hitsRight[i].collider.gameObject;
+                nodeLeft = hitsLeft[i].collider.gameObject;
             }
         }
 
@@ -86,4 +85,28 @@ public class NodeController : MonoBehaviour
     {
         
     }
+    public GameObject GetNodeFromDirection(string direction)
+    {
+        if(direction == "left" && canMoveLeft)
+        {
+            return nodeLeft;
+        }
+        else if(direction == "right" && canMoveRight)
+        {
+            return nodeRight;
+        }
+        else if (direction == "up" && canMoveUp)
+        {
+            return nodeUp;
+        }
+        else if (direction == "down" && canMoveDown)
+        {
+            return nodeDown;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
 }
