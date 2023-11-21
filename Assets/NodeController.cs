@@ -16,8 +16,13 @@ public class NodeController : MonoBehaviour
     public GameObject nodeDown;
 
 
+
+    public bool isWarpRightNode = false;
+    public bool isWarpLeftNode = false;
+
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
 
         RaycastHit2D[] hitsDown;
