@@ -17,10 +17,12 @@ public class MovementController : MonoBehaviour
 
     public bool canWarp = true;
 
+    public bool isGhost = false;
+
 
     void Awake()
     {
-       gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -29,17 +31,33 @@ public class MovementController : MonoBehaviour
         NodeController currentNodeController = currentNode.GetComponent<NodeController>();
 
         transform.position = Vector2.MoveTowards(transform.position, currentNode.transform.position, speed * Time.deltaTime);
-        
-        if(transform.position.x == currentNode.transform.position.x && transform.position.y == currentNode.transform.position.y)
+
+        bool reverseDirection = false;
+        if (
+            (direction == "left" && lastMovingDirection == "right")
+            || (direction == "right" && lastMovingDirection == "left")
+            || (direction == "up" && lastMovingDirection == "down")
+            || (direction == "down" && lastMovingDirection == "up")
+            )
         {
+            reverseDirection = true;
+        }
+
+        if (transform.position.x == currentNode.transform.position.x && transform.position.y == currentNode.transform.position.y)
+        {
+            if (isGhost)
+            {
+                GetComponent<EnemyController>().ReachedCenterOfNode(currentNodeController);
+            }
             if (currentNodeController.isWarpLeftNode && canWarp)
             {
                 currentNode = gameManager.rightWarpNode;
                 direction = "left";
                 lastMovingDirection = "left";
-                transform.position= currentNode.transform.position;
+                transform.position = currentNode.transform.position;
                 canWarp = false;
-            }else if (currentNodeController.isWarpRightNode && canWarp)
+            }
+            else if (currentNodeController.isWarpRightNode && canWarp)
             {
                 currentNode = gameManager.leftWarpNode;
                 direction = "right";
@@ -64,9 +82,9 @@ public class MovementController : MonoBehaviour
                     {
                         currentNode = newNode;
                     }
-                } 
+                }
             }
-           
+
         }
         else
         {

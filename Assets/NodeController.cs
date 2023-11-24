@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class NodeController : MonoBehaviour
-{   
+{
     public bool canMoveLeft = false;
     public bool canMoveRight = false;
     public bool canMoveUp = false;
@@ -45,10 +45,10 @@ public class NodeController : MonoBehaviour
         //Shoot rayCast (line) going down
         hitsDown = Physics2D.RaycastAll(transform.position, -Vector2.up);
         // loop throught all of the gameobjects that the raycast hits
-        for (int i =0; i < hitsDown.Length; i++ )
+        for (int i = 0; i < hitsDown.Length; i++)
         {
             float distance = Mathf.Abs(hitsDown[i].point.y - transform.position.y);
-            if(distance< 0.4f && hitsDown[i].collider.tag=="Node")
+            if (distance < 0.4f && hitsDown[i].collider.tag == "Node")
             {
                 canMoveDown = true;
                 nodeDown = hitsDown[i].collider.gameObject;
@@ -104,15 +104,15 @@ public class NodeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     public GameObject GetNodeFromDirection(string direction)
     {
-        if(direction == "left" && canMoveLeft)
+        if (direction == "left" && canMoveLeft)
         {
             return nodeLeft;
         }
-        else if(direction == "right" && canMoveRight)
+        else if (direction == "right" && canMoveRight)
         {
             return nodeRight;
         }
@@ -132,7 +132,7 @@ public class NodeController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag=="Player" && hasPellet)
+        if (collision.tag == "Player" && hasPellet)
         {
             hasPellet = false;
             pelletSprite.enabled = false;

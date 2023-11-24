@@ -59,5 +59,5 @@ public class GameManager : MonoBehaviour
 
         //Is this are power pellet
     }
-    
+
 }

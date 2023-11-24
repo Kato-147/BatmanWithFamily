@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
         sprite = GetComponentInChildren<SpriteRenderer>();
 
         movementController = GetComponent<MovementController>();
+        movementController.lastMovingDirection = "left";
 
     }
 
