@@ -3118,8 +3118,8 @@ Transform:
   m_GameObject: {fileID: 75999897}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0173, y: 0.0084, z: 0}
-  m_LocalScale: {x: 1.3986483, y: 1.3977197, z: 1.0354}
+  m_LocalPosition: {x: 0.0343, y: -0.0045, z: 0}
+  m_LocalScale: {x: 1.3986638, y: 1.3938034, z: 1.0354}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -4556,7 +4556,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -354, y: 236}
+  m_AnchoredPosition: {x: -305, y: 205}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &121451422
@@ -21063,6 +21063,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04a86fd6934b76649bb16f94bf16e4fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pacman: {fileID: 1335258790}
   leftWarpNode: {fileID: 259057386}
   rightWarpNode: {fileID: 1479156371}
   siren: {fileID: 750856356}
@@ -60586,7 +60587,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 750856354}
   currentNode: {fileID: 1868427206}
-  speed: 3
+  speed: 2
   direction: left
   lastMovingDirection: left
   canWarp: 1
@@ -60604,14 +60605,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ghostNodeState: 1
-  ghostType: 1
+  ghostType: 3
   ghostNodeLeft: {fileID: 1868427206}
   ghostNodeRight: {fileID: 320123180}
   ghostNodeCenter: {fileID: 1756178404}
   ghostNodeStart: {fileID: 343435001}
   movementController: {fileID: 2047950991}
   startingNode: {fileID: 1868427206}
-  readToLeaveHome: 0
+  readToLeaveHome: 1
+  gameManager: {fileID: 750856354}
 --- !u!4 &2047950993
 Transform:
   m_ObjectHideFlags: 0
@@ -60621,7 +60623,7 @@ Transform:
   m_GameObject: {fileID: 2047950989}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.6, y: 0.27, z: -0.013397005}
+  m_LocalPosition: {x: -0.65, y: 0.31, z: -0.013397005}
   m_LocalScale: {x: 0.15, y: 0.15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

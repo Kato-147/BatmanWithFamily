@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    //loc Viet
+    public GameObject pacman;
+
     public GameObject leftWarpNode;
     public GameObject rightWarpNode;
 

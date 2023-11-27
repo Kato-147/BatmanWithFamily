@@ -37,10 +37,15 @@ public class EnemyController : MonoBehaviour
     public GameObject startingNode;
 
     public bool readToLeaveHome = false;
+    //loc viet
+    public GameManager gameManager;
 
     // Start is called before the first frame update
     void Awake()
     {
+        //locViet
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
         movementController = GetComponent<MovementController>();
         if (ghostType == GhostType.red)
         {
@@ -63,6 +68,9 @@ public class EnemyController : MonoBehaviour
             startingNode = ghostNodeRight;
         }
         movementController.currentNode = startingNode;
+        //loc viet
+        transform.position = startingNode.transform.position;
+        
     }
 
     // Update is called once per frame
@@ -76,6 +84,10 @@ public class EnemyController : MonoBehaviour
         if (ghostNodeState == GhostNodeStatesEnum.movingInNodes)
         {
             //Determine next game node to go to
+            if(ghostType == GhostType.red)
+            {
+                DetermineRedGhostDirection();
+            }
         }
         else if (ghostNodeState == GhostNodeStatesEnum.respawning)
         {
@@ -113,4 +125,74 @@ public class EnemyController : MonoBehaviour
             }
         }
     }
+    //loc Viet
+    void DetermineRedGhostDirection()
+    {
+        string direction = GetClosestDirection(gameManager.pacman.transform.position);
+        movementController.SetDirection(direction);
+    }
+    void DeterminePinkGhostDirection() { }
+    void DetermineBlueGhostDirection() { }
+    void DetermineOrangeGhostDirection() { }
+    string GetClosestDirection(Vector2 target)
+    {
+        float shortesDistance = 0;
+        string lastMovingDirection = movementController.lastMovingDirection;
+        string newDirection = "";
+        NodeController nodeController = movementController.currentNode.GetComponent<NodeController>();
+        //if we can move up and we aren't reversing
+        if (nodeController.canMoveUp && lastMovingDirection != "down")
+        {
+            GameObject nodeUp = nodeController.nodeUp;
+            //get the distance between our top node,and pacman
+            float distance = Vector2.Distance(nodeUp.transform.position, target);
+            //if this is the shortest distance so far,set our direction
+            if(distance < shortesDistance || shortesDistance == 0)
+            {
+                shortesDistance = distance;
+                newDirection = "up";
+            }
+        }
+
+        if (nodeController.canMoveDown && lastMovingDirection != "up")
+        {
+            GameObject nodeDown = nodeController.nodeDown;
+            //get the distance between our top node,and pacman
+            float distance = Vector2.Distance(nodeDown.transform.position, target);
+            //if this is the shortest distance so far,set our direction
+            if (distance < shortesDistance || shortesDistance == 0)
+            {
+                shortesDistance = distance;
+                newDirection = "down";
+            }
+        }
+
+        if (nodeController.canMoveLeft && lastMovingDirection != "right")
+        {
+            GameObject nodeLeft = nodeController.nodeLeft;
+            //get the distance between our top node,and pacman
+            float distance = Vector2.Distance(nodeLeft.transform.position, target);
+            //if this is the shortest distance so far,set our direction
+            if (distance < shortesDistance || shortesDistance == 0)
+            {
+                shortesDistance = distance;
+                newDirection = "left";
+            }
+        }
+        if (nodeController.canMoveRight && lastMovingDirection != "left")
+        {
+            GameObject nodeRight = nodeController.nodeRight;
+            //get the distance between our top node,and pacman
+            float distance = Vector2.Distance(nodeRight.transform.position, target);
+            //if this is the shortest distance so far,set our direction
+            if (distance < shortesDistance || shortesDistance == 0)
+            {
+                shortesDistance = distance;
+                newDirection = "right";
+            }
+        }
+        return newDirection;
+    }
+    
 }
+
