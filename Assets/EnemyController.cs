@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +18,7 @@ public class EnemyController : MonoBehaviour
     }
 
     public GhostNodeStatesEnum ghostNodeState;
+    public GhostNodeStatesEnum respawnState;
 
     public enum GhostType
     {
@@ -27,6 +29,7 @@ public class EnemyController : MonoBehaviour
     }
 
     public GhostType ghostType;
+    
 
     public GameObject ghostNodeLeft;
     public GameObject ghostNodeRight;
@@ -40,6 +43,9 @@ public class EnemyController : MonoBehaviour
     //loc viet
     public GameManager gameManager;
 
+    // Vy viet
+    public bool testRespawm = false;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -50,21 +56,26 @@ public class EnemyController : MonoBehaviour
         if (ghostType == GhostType.red)
         {
             ghostNodeState = GhostNodeStatesEnum.startNode;
+            respawnState = GhostNodeStatesEnum.centerNode;
             startingNode = ghostNodeStart;
+            readToLeaveHome = true;
         }
         else if (ghostType == GhostType.pink)
         {
             ghostNodeState = GhostNodeStatesEnum.centerNode;
+            respawnState = GhostNodeStatesEnum.centerNode;
             startingNode = ghostNodeCenter;
         }
         else if (ghostType == GhostType.blue)
         {
             ghostNodeState = GhostNodeStatesEnum.leftNode;
+            respawnState = GhostNodeStatesEnum.leftNode;
             startingNode = ghostNodeLeft;
         }
         else if (ghostType == GhostType.orange)
         {
             ghostNodeState = GhostNodeStatesEnum.rightNode;
+            respawnState = GhostNodeStatesEnum.rightNode;
             startingNode = ghostNodeRight;
         }
         movementController.currentNode = startingNode;
@@ -76,7 +87,12 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(testRespawm == true)
+        {
+            readToLeaveHome = false;
+            ghostNodeState = GhostNodeStatesEnum.respawning;
+            testRespawm = false;
+        }
     }
 
     public void ReachedCenterOfNode(NodeController nodeController)
@@ -91,7 +107,49 @@ public class EnemyController : MonoBehaviour
         }
         else if (ghostNodeState == GhostNodeStatesEnum.respawning)
         {
-            //Determine quickest direction to home
+            string direction = "";
+
+            // we have reached our start node, move to the center node
+            if (transform.position.x == ghostNodeStart.transform.position.x && transform.position.y == ghostNodeStart.transform.position.y)
+            {
+                direction = "down";
+            }
+
+            // we have reached our start node,either finish respawn , or move to the left/right node
+            else if (transform.position.x == ghostNodeCenter.transform.position.x && transform.position.y == ghostNodeCenter.transform.position.y)
+            {
+                if(respawnState == GhostNodeStatesEnum.centerNode)
+                {
+                    ghostNodeState = respawnState;
+                }
+                else if(respawnState == GhostNodeStatesEnum.leftNode)
+                {
+                    direction = "left";
+                }
+                else if(respawnState == GhostNodeStatesEnum.rightNode)
+                {
+                    direction = "right";
+                }
+            }
+            // if our respawn sate is either the left or right node, and we got to that node , leave home again
+            else if(
+                (transform.position.x == ghostNodeLeft.transform.position.x && transform.position.y == ghostNodeLeft.transform.position.y)
+                || (transform.position.x == ghostNodeRight.transform.position.x && transform.position.y == ghostNodeRight.transform.position.y)
+                )
+            {
+                ghostNodeState = respawnState;
+            }
+            // we are in the gamebroad still, locate our start node
+            else
+            {
+                //Determine quickest direction to home
+                direction = GetClosestDirection(ghostNodeStart.transform.position);
+            }
+
+
+          
+            movementController.SetDirection(direction);
+
         }
         else
         {
