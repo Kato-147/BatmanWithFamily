@@ -9,19 +9,40 @@ public class PlayerController : MonoBehaviour
 
     public SpriteRenderer sprite;
     public Animator    animator;
+    public GameObject startNode;
+    public Vector2 startPos;
+
+    public GameManager gameManager;
+
     void Awake()
     {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        startPos = new Vector2(0.77f, 2.97f);
         animator = GetComponentInChildren<Animator>();
         sprite = GetComponentInChildren<SpriteRenderer>();
-
         movementController = GetComponent<MovementController>();
-        movementController.lastMovingDirection = "left";
+        startNode = movementController.currentNode;
 
+
+    }
+
+    public void Setup()
+    {
+        movementController.currentNode = startNode;
+        movementController.lastMovingDirection= "left";
+        transform.position = startPos;
+        animator.SetBool("moving", false);
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        if(!gameManager.gameIsRunning)
+        {
+            return;
+        }
+
         animator.SetBool("moving", true);
         if (Input.GetKey(KeyCode.LeftArrow))
         {
@@ -42,10 +63,9 @@ public class PlayerController : MonoBehaviour
 
         bool flipX = false;
         bool flipY = false;
-        if(movementController.lastMovingDirection == "left")
+        if(movementController.lastMovingDirection=="left")
         {
             animator.SetInteger("direction", 0);
-          
         }
         else if (movementController.lastMovingDirection == "right")
         {

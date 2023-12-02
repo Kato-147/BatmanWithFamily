@@ -17,9 +17,44 @@ public class GameManager : MonoBehaviour
     public int score;
     public TextMeshProUGUI scoreText;
 
+<<<<<<< Updated upstream
     // Start is called before the first frame update
     void Awake()
     {
+=======
+    public GameObject ghostNodeLeft;
+    public GameObject ghostNodeRight;
+    public GameObject ghostNodeCenter;
+    public GameObject ghostNodeStart;
+
+    public GameObject redGhost;
+    public GameObject blueGhost;
+    public GameObject pinkGhost;
+    public GameObject orangeGhost;
+
+    public int totalPellets;
+    public int pelletsLeft;
+    public int pellectedCollectedOnThisLife;
+
+    public bool hadDeathOnThisLevel=false;
+
+    public bool gameIsRunning;
+
+    public enum GhostMode
+    {
+        chase, scatter
+    }
+    public GhostMode currentGhostMode;
+
+    // Start is called before the first frame update
+    void Awake()
+    {
+        gameIsRunning = true;
+        pinkGhost.GetComponent<EnemyController>().readToLeaveHome = true;
+        currentGhostMode = GhostMode.chase;
+        ghostNodeStart.GetComponent<NodeController>().isGhostStartingNode = true;
+        pacman = GameObject.Find("Player");
+>>>>>>> Stashed changes
         score = 0;
         currentMunch = 0;
         siren.Play();
