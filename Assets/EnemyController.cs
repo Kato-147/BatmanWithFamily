@@ -19,6 +19,7 @@ public class EnemyController : MonoBehaviour
     }
 
     public GhostNodeStatesEnum ghostNodeState;
+    public GhostNodeStatesEnum startGhostNodeState;
     public GhostNodeStatesEnum respawnState;
 
     public enum GhostType
@@ -43,7 +44,7 @@ public class EnemyController : MonoBehaviour
     public bool readToLeaveHome = false;
     //loc viet
     public GameManager gameManager;
-    public GhostNodeStatesEnum startGhostNodeState;
+    
 
     // Vy viet
     public bool testRespawm = false;
@@ -58,7 +59,7 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        scatterNodeIndex = 0;
+       
         //locViet
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
@@ -69,8 +70,7 @@ public class EnemyController : MonoBehaviour
             startGhostNodeState = GhostNodeStatesEnum.startNode;
             respawnState = GhostNodeStatesEnum.centerNode;
             startingNode = ghostNodeStart;
-            readToLeaveHome = true;
-            leftHomeBefore = true;
+          
         }
         else if (ghostType == GhostType.pink)
         {

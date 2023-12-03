@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     MovementController movementController;
 
     public SpriteRenderer sprite;
-    public Animator    animator;
+    public Animator animator;
     //locViet
     public GameObject startNode;
     public Vector2 startPos;
@@ -20,16 +20,13 @@ public class PlayerController : MonoBehaviour
     {
         //LocViet
         gameManager =GameObject.Find("GameManager").GetComponent<GameManager>();
-        startPos = new Vector2(0.77f, 2.97f);
+        startPos = new Vector2(-0.06f, -0.63f);
 
 
 
         animator = GetComponentInChildren<Animator>();
         sprite = GetComponentInChildren<SpriteRenderer>();
-
         movementController = GetComponent<MovementController>();
-        movementController.lastMovingDirection = "left";
-
         //locViet
         startNode = movementController.currentNode;
 
