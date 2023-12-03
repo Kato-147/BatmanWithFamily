@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
 using Unity.VisualScripting;
@@ -20,8 +20,6 @@ public class EnemyController : MonoBehaviour
 
     public GhostNodeStatesEnum ghostNodeState;
     public GhostNodeStatesEnum respawnState;
-    //Loc Viet
-    public GhostNodeStatesEnum startGhostNodeState;
 
     public enum GhostType
     {
@@ -45,7 +43,6 @@ public class EnemyController : MonoBehaviour
     public bool readToLeaveHome = false;
     //loc viet
     public GameManager gameManager;
-    public bool leftHomeBefore = false;
 
     // Vy viet
     public bool testRespawm = false;
@@ -55,86 +52,51 @@ public class EnemyController : MonoBehaviour
     public GameObject[] scatterNodes;
     public int scatterNodeIndex;
 
+    public bool leftHomeBefore = false;
+
     // Start is called before the first frame update
     void Awake()
     {
-        //scatterNodeIndex = 0;
+        scatterNodeIndex = 0;
         //locViet
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         movementController = GetComponent<MovementController>();
         if (ghostType == GhostType.red)
         {
-            //Loc Sua
-            startGhostNodeState = GhostNodeStatesEnum.startNode;
+            ghostNodeState = GhostNodeStatesEnum.startNode;
             respawnState = GhostNodeStatesEnum.centerNode;
             startingNode = ghostNodeStart;
-            //readToLeaveHome = true;
+            readToLeaveHome = true;
+            leftHomeBefore = true;
         }
         else if (ghostType == GhostType.pink)
         {
-            //Loc Sua
-            startGhostNodeState = GhostNodeStatesEnum.centerNode;
+            ghostNodeState = GhostNodeStatesEnum.centerNode;
             respawnState = GhostNodeStatesEnum.centerNode;
             startingNode = ghostNodeCenter;
         }
         else if (ghostType == GhostType.blue)
         {
-            //Loc Sua
-            startGhostNodeState = GhostNodeStatesEnum.leftNode;
+            ghostNodeState = GhostNodeStatesEnum.leftNode;
             respawnState = GhostNodeStatesEnum.leftNode;
             startingNode = ghostNodeLeft;
         }
         else if (ghostType == GhostType.orange)
         {
-            startGhostNodeState = GhostNodeStatesEnum.rightNode;
+            ghostNodeState = GhostNodeStatesEnum.rightNode;
             respawnState = GhostNodeStatesEnum.rightNode;
             startingNode = ghostNodeRight;
         }
-
-
         movementController.currentNode = startingNode;
         //loc viet
         transform.position = startingNode.transform.position;
         
     }
-    //Loc Viet
-    public void Setup()
-    {
-        ghostNodeState = startGhostNodeState;
-        //resset lại hồn ma trở về vị trí ban đầu
-        movementController.currentNode = startingNode;
-        transform.position = startingNode.transform.position;
-
-        //đặt chỉ số phân tán chúng
-        scatterNodeIndex = 0;
-
-        //set isFrightened:sợ hãi
-        isFrightened = false;
-
-        //set readyToLeaveHome to be false if they are blue and pink
-        if (ghostType == GhostType.red)
-        {
-            readToLeaveHome = true;
-            leftHomeBefore = true;
-        }
-        else if(ghostType == GhostType.pink)
-        {
-            readToLeaveHome = true;
-        }
-    }
-
 
     // Update is called once per frame
     void Update()
     {
-
-        //locViet
-        if (!gameManager.gameIsRunning)
-        {
-            return;
-        }
-
         if(testRespawm == true)
         {
             readToLeaveHome = false;
@@ -155,28 +117,19 @@ public class EnemyController : MonoBehaviour
     {
         if (ghostNodeState == GhostNodeStatesEnum.movingInNodes)
         {
+            leftHomeBefore = true;
             // Scatter mode
             if(gameManager.currentGhostMode == GameManager.GhostMode.scatter)
             {
-               
-                if(transform.position.x == scatterNodes[scatterNodeIndex].transform.position.x && transform.position.y == scatterNodes[scatterNodeIndex].transform.position.y)
-                {
-                    scatterNodeIndex++;
 
-                    if (scatterNodeIndex == scatterNodes.Length - 1)
-                    {
-                        scatterNodeIndex = 0;
-                    }
-                }
-
-                string direction = GetClosestDirection(scatterNodes[scatterNodeIndex].transform.position);
-                movementController.SetDirection(direction);
+                DetermineGhostScatterModeDirection();
 
             }
             // Fright mode
             else if (isFrightened)
             {
-
+                string direction= GetRandomDirection();
+                movementController.SetDirection(direction);
             }
             // chase mode
             else
@@ -278,6 +231,50 @@ public class EnemyController : MonoBehaviour
             }
         }
     }
+
+    string GetRandomDirection()
+    {
+        List<string> possibleDirections=new List<string>();
+        NodeController nodeController = movementController.currentNode.GetComponent<NodeController>();
+
+        if (nodeController.canMoveDown && movementController.lastMovingDirection != "up")
+        {
+            possibleDirections.Add("down");
+        }
+        if (nodeController.canMoveDown && movementController.lastMovingDirection != "down")
+        {
+            possibleDirections.Add("up");
+        }
+        if (nodeController.canMoveDown && movementController.lastMovingDirection != "left")
+        {
+            possibleDirections.Add("right");
+        }
+        if (nodeController.canMoveDown && movementController.lastMovingDirection != "right")
+        {
+            possibleDirections.Add("left");
+        }
+
+        string direction = "";
+        int randomDirectionIndex= Random.Range(0, possibleDirections.Count-1);
+        direction = possibleDirections[randomDirectionIndex];
+        return direction;
+    }
+
+    void DetermineGhostScatterModeDirection()
+    {
+        if (transform.position.x == scatterNodes[scatterNodeIndex].transform.position.x && transform.position.y == scatterNodes[scatterNodeIndex].transform.position.y)
+        {
+            scatterNodeIndex++;
+
+            if (scatterNodeIndex == scatterNodes.Length - 1)
+            {
+                scatterNodeIndex = 0;
+            }
+        }
+
+        string direction = GetClosestDirection(scatterNodes[scatterNodeIndex].transform.position);
+        movementController.SetDirection(direction);
+    }
     //loc Viet
     void DetermineRedGhostDirection()
     {
@@ -340,8 +337,23 @@ public class EnemyController : MonoBehaviour
         string direction = GetClosestDirection(blueTager);
         movementController.SetDirection(direction);
     }
-    void DetermineOrangeGhostDirection() {
-        
+    void DetermineOrangeGhostDirection() 
+    {
+        float distance = Vector2.Distance(gameManager.pacman.transform.position, transform.position);
+        float distanceBetweenNodes = 0.35f;
+        if(distance < 0)
+        {
+            distance *= -1;
+        }
+
+        if(distance <= distanceBetweenNodes * 8)
+        {
+            DetermineRedGhostDirection();     
+        }
+        else
+        {
+            DetermineGhostScatterModeDirection();
+        }
     }
     string GetClosestDirection(Vector2 target)
     {
