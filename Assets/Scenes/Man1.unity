@@ -3113,7 +3113,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghostNodeState: 0
   respawnState: 0
-  startGhostNodeState: 0
   ghostType: 2
   ghostNodeLeft: {fileID: 1868427206}
   ghostNodeRight: {fileID: 320123180}
@@ -3123,7 +3122,7 @@ MonoBehaviour:
   startingNode: {fileID: 1868427206}
   readToLeaveHome: 1
   gameManager: {fileID: 750856354}
-  leftHomeBefore: 0
+  startGhostNodeState: 0
   testRespawm: 0
   isFrightened: 0
   scatterNodes:
@@ -21520,7 +21519,6 @@ MonoBehaviour:
   orangeGhostController: {fileID: 0}
   newGame: 0
   clearedLevel: 0
-  pellectedCollectedOnThisLife: 0
   startGameAudio: {fileID: 750856359}
   lives: 0
   currentLevel: 0
@@ -21531,7 +21529,7 @@ MonoBehaviour:
   munch2: {fileID: 750856357}
   currentMunch: 0
   score: 0
-  scoreText: {fileID: 121451422}
+  scoreText: {fileID: 0}
   ghostNodeLeft: {fileID: 1868427206}
   ghostNodeRight: {fileID: 320123180}
   ghostNodeCenter: {fileID: 1756178404}
@@ -38281,7 +38279,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghostNodeState: 0
   respawnState: 0
-  startGhostNodeState: 0
   ghostType: 3
   ghostNodeLeft: {fileID: 1868427206}
   ghostNodeRight: {fileID: 320123180}
@@ -38291,7 +38288,7 @@ MonoBehaviour:
   startingNode: {fileID: 1868427206}
   readToLeaveHome: 1
   gameManager: {fileID: 750856354}
-  leftHomeBefore: 0
+  startGhostNodeState: 0
   testRespawm: 0
   isFrightened: 0
   scatterNodes:
@@ -46244,7 +46241,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghostNodeState: 0
   respawnState: 0
-  startGhostNodeState: 0
   ghostType: 1
   ghostNodeLeft: {fileID: 1868427206}
   ghostNodeRight: {fileID: 320123180}
@@ -46254,7 +46250,7 @@ MonoBehaviour:
   startingNode: {fileID: 1868427206}
   readToLeaveHome: 1
   gameManager: {fileID: 750856354}
-  leftHomeBefore: 0
+  startGhostNodeState: 0
   testRespawm: 0
   isFrightened: 0
   scatterNodes:
@@ -61928,7 +61924,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghostNodeState: 0
   respawnState: 0
-  startGhostNodeState: 0
   ghostType: 0
   ghostNodeLeft: {fileID: 1868427206}
   ghostNodeRight: {fileID: 320123180}
@@ -61938,7 +61933,7 @@ MonoBehaviour:
   startingNode: {fileID: 1868427206}
   readToLeaveHome: 1
   gameManager: {fileID: 750856354}
-  leftHomeBefore: 0
+  startGhostNodeState: 0
   testRespawm: 0
   isFrightened: 0
   scatterNodes:

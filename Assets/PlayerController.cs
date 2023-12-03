@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     public GameObject startNode;
     public Vector2 startPos;
     public GameManager gameManager;
+
+    
     void Awake()
     {
         //LocViet
