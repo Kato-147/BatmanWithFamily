@@ -340,7 +340,9 @@ public class EnemyController : MonoBehaviour
         string direction = GetClosestDirection(blueTager);
         movementController.SetDirection(direction);
     }
-    void DetermineOrangeGhostDirection() { }
+    void DetermineOrangeGhostDirection() {
+        
+    }
     string GetClosestDirection(Vector2 target)
     {
         float shortesDistance = 0;
