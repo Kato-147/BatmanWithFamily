@@ -28,6 +28,15 @@ public class MovementController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!gameManager.gameIsRunning)
+        {
+            return;
+        }
+        if (currentNode == null)
+        {
+            Debug.LogError("currentNode is null");
+            return;
+        }
         NodeController currentNodeController = currentNode.GetComponent<NodeController>();
 
         transform.position = Vector2.MoveTowards(transform.position, currentNode.transform.position, speed * Time.deltaTime);
@@ -67,7 +76,7 @@ public class MovementController : MonoBehaviour
             }
             else
             {
-                // if we
+                // if we are not a ghost
                 if (currentNodeController.isGhostStartingNode && direction == "down"
                     && (!isGhost || GetComponent<EnemyController>().ghostNodeState != EnemyController.GhostNodeStatesEnum.respawning)) 
                 {
