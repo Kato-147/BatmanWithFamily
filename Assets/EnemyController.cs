@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
 using Unity.VisualScripting;
@@ -20,6 +20,8 @@ public class EnemyController : MonoBehaviour
 
     public GhostNodeStatesEnum ghostNodeState;
     public GhostNodeStatesEnum respawnState;
+    //Loc Viet
+    public GhostNodeStatesEnum startGhostNodeState;
 
     public enum GhostType
     {
@@ -43,6 +45,7 @@ public class EnemyController : MonoBehaviour
     public bool readToLeaveHome = false;
     //loc viet
     public GameManager gameManager;
+    public bool leftHomeBefore = false;
 
     // Vy viet
     public bool testRespawm = false;
@@ -55,45 +58,83 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        scatterNodeIndex = 0;
+        //scatterNodeIndex = 0;
         //locViet
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         movementController = GetComponent<MovementController>();
         if (ghostType == GhostType.red)
         {
-            ghostNodeState = GhostNodeStatesEnum.startNode;
+            //Loc Sua
+            startGhostNodeState = GhostNodeStatesEnum.startNode;
             respawnState = GhostNodeStatesEnum.centerNode;
             startingNode = ghostNodeStart;
-            readToLeaveHome = true;
+            //readToLeaveHome = true;
         }
         else if (ghostType == GhostType.pink)
         {
-            ghostNodeState = GhostNodeStatesEnum.centerNode;
+            //Loc Sua
+            startGhostNodeState = GhostNodeStatesEnum.centerNode;
             respawnState = GhostNodeStatesEnum.centerNode;
             startingNode = ghostNodeCenter;
         }
         else if (ghostType == GhostType.blue)
         {
-            ghostNodeState = GhostNodeStatesEnum.leftNode;
+            //Loc Sua
+            startGhostNodeState = GhostNodeStatesEnum.leftNode;
             respawnState = GhostNodeStatesEnum.leftNode;
             startingNode = ghostNodeLeft;
         }
         else if (ghostType == GhostType.orange)
         {
-            ghostNodeState = GhostNodeStatesEnum.rightNode;
+            startGhostNodeState = GhostNodeStatesEnum.rightNode;
             respawnState = GhostNodeStatesEnum.rightNode;
             startingNode = ghostNodeRight;
         }
+
+
         movementController.currentNode = startingNode;
         //loc viet
         transform.position = startingNode.transform.position;
         
     }
+    //Loc Viet
+    public void Setup()
+    {
+        ghostNodeState = startGhostNodeState;
+        //resset lại hồn ma trở về vị trí ban đầu
+        movementController.currentNode = startingNode;
+        transform.position = startingNode.transform.position;
+
+        //đặt chỉ số phân tán chúng
+        scatterNodeIndex = 0;
+
+        //set isFrightened:sợ hãi
+        isFrightened = false;
+
+        //set readyToLeaveHome to be false if they are blue and pink
+        if (ghostType == GhostType.red)
+        {
+            readToLeaveHome = true;
+            leftHomeBefore = true;
+        }
+        else if(ghostType == GhostType.pink)
+        {
+            readToLeaveHome = true;
+        }
+    }
+
 
     // Update is called once per frame
     void Update()
     {
+
+        //locViet
+        if (!gameManager.gameIsRunning)
+        {
+            return;
+        }
+
         if(testRespawm == true)
         {
             readToLeaveHome = false;
