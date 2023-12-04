@@ -23,10 +23,10 @@ public class NodeController : MonoBehaviour
         hitsDown = Physics2D.RaycastAll(transform.position, -Vector2.up);
 
         //Loop through all of the gameobjects that the raycast hits
-        for(int i = 0; i < hitsDown.Length; i++)
+        for (int i = 0; i < hitsDown.Length; i++)
         {
             float distance = Mathf.Abs(hitsDown[i].point.y - transform.position.y);
-            if(distance < 0.4f)
+            if (distance < 0.4f)
             {
                 canMoveDown = true;
                 nodeDown = hitsDown[i].collider.gameObject;
@@ -83,6 +83,30 @@ public class NodeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+    public GameObject GetNodeFromDirection(string direction)
+    {
+        if (direction == "left" && canMoveLeft)
+        {
+            return nodeLeft;
+        }
+        else if (direction == "right" && canMoveRight)
+        {
+            return nodeRight;
+        }
+        else if (direction == "up" && canMoveUp)
+        {
+            return nodeUp;
+        }
+        else if (direction == "down" && canMoveDown)
+        {
+            return nodeDown;
+        }
+        else
+        {
+            return null;
+        }
     }
 }
