@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -147,7 +148,7 @@ public class GameManager : MonoBehaviour
         newGame = false;
         clearedLevel = false;
         yield return new WaitForSeconds(waitTimer);
-
+       
         StartGame();
 
     }
@@ -284,6 +285,7 @@ public class GameManager : MonoBehaviour
         //Check if there are any pellets left
         if (pelletsLeft==0)
         {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
             currentLevel++;
             clearedLevel = true;
             StopGame();
