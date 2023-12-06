@@ -69,7 +69,7 @@ public class Register : MonoBehaviour
                 edtUser.text = "";
                 edtPassword.text = "";
                 edtRePass.text = "";
-               
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
             }
         }
         request.Dispose();
