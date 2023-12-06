@@ -4850,7 +4850,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1792733891}
   currentNode: {fileID: 177403957}
-  speed: 2
+  speed: 4
   direction: 
   lastMovingDirrection: 
   canWarp: 0
@@ -22818,7 +22818,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1792733891}
   currentNode: {fileID: 0}
-  speed: 2
+  speed: 4
   direction: 
   lastMovingDirrection: 
   canWarp: 1
@@ -24313,7 +24313,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1792733891}
   currentNode: {fileID: 0}
-  speed: 2
+  speed: 4
   direction: 
   lastMovingDirrection: 
   canWarp: 1
@@ -43788,8 +43788,8 @@ Transform:
   m_GameObject: {fileID: 1515343816}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.06, y: 0, z: 0}
-  m_LocalScale: {x: 0.4556774, y: 0.88688445, z: 1}
+  m_LocalPosition: {x: 0.04, y: -0.0152, z: 0}
+  m_LocalScale: {x: 0.4588227, y: 0.8708426, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -47583,7 +47583,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1792733891}
   currentNode: {fileID: 0}
-  speed: 2
+  speed: 4
   direction: 
   lastMovingDirrection: 
   canWarp: 1
@@ -60084,7 +60084,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1792733891}
   currentNode: {fileID: 0}
-  speed: 2
+  speed: 4
   direction: 
   lastMovingDirrection: 
   canWarp: 1
